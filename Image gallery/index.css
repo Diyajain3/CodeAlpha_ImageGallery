@@ -1,0 +1,243 @@
+body {
+  margin: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+   background: linear-gradient(120deg, #f0f0f0, #d9d9d9);
+}
+
+.gallery {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  overflow-x: scroll;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  scroll-snap-type: x mandatory;
+}
+
+.gallery div {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px; /* space between images */
+ flex: none;
+}
+
+.gallery-title {
+  position: relative;  /* needed for ::after positioning */
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #333;
+  cursor: pointer;     /* indicate hover */
+}
+
+.gallery-title::after {
+  content: attr(data-title);
+  position: absolute;
+  top: 50px;                /* adjust vertical position */
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  background: rgba(0,0,0,0.6);
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;     /* prevent blocking */
+  transition: opacity 0.3s;
+}
+
+.gallery-title:hover::after {
+  opacity: 1;
+  width: 500px ;
+}
+
+
+
+.gallery div img {
+  position: relative;  
+   z-index: 1;
+    margin: 10px;
+  width: 100px;
+  height: 300px;
+  object-fit: cover;
+  filter: grayscale(70%);
+  transition: opacity 0.5s ease,transform 0.7s;
+  border-radius: 3px;
+  box-shadow: 0.3px 0.3px 5px rgb(67, 66, 66), -0.3px -0.3px 5px rgb(67, 66, 66);
+  scroll-snap-align: start;
+  
+}
+.gallery div img.visible {
+  opacity: 1;
+  
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.wrap-gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10% auto;
+  height: 400px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  border-radius: 12px;
+  padding: 20px;
+  background: #fff;
+}
+
+#backbtn,
+#nextbtn {
+  width: 50px;
+  cursor: pointer;
+  margin: 45px;
+}
+
+#backbtn:hover, #nextbtn:hover {
+  filter: drop-shadow(0 0 8px #ff6600);
+  transform: scale(1.2);
+  transition: transform 0.3s;
+}
+
+
+.gallery div img:hover {
+  width: 240px;
+  height: 350px;
+  margin: 10px;
+  filter: grayscale(0%);
+  transform: scale(1.1) rotate(-2deg);
+  cursor: pointer;
+  filter: brightness(1.1);
+  border: 2px solid #0e0d0d;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+
+}
+
+@media (max-width: 1120px) {
+  .gallery div {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  gap: 20px;
+}
+}
+
+/* Desktop grid >= 1200px */
+.gallery div {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  gap: 20px;
+}
+
+/* All screens below 1200px → flex row single line */
+@media (max-width: 1199px) {
+  .gallery div {
+    display: flex;
+    flex-wrap: nowrap;      /* force single row */
+    gap: 15px;
+    overflow-x: auto;       /* scroll horizontally */
+  }
+
+  .gallery div img {
+     margin: 5px;
+    flex: 0 0 auto;         /* prevent shrinking */
+    width: 90px;
+    height: 280px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .gallery div img:hover {
+    z-index: 10;
+    transform: scale(1.1);
+  }
+}
+
+
+@media (max-width: 1199px) and (min-width: 768px) {
+  .gallery div {
+    display: flex;
+    flex-wrap: nowrap;   /* keep in one row */
+    gap: 15px;
+    overflow-x: auto; 
+    scroll-behavior: smooth;
+  }
+
+  .gallery div::-webkit-scrollbar {
+  display: none;
+}
+  .gallery div img {
+     flex: 0 0 auto; 
+    margin: 5px;
+    height: 280px;
+    width: 90px;
+    position: relative;
+    z-index: 1;
+  }
+  .gallery div img:hover {
+    z-index: 10;
+   
+    transform: scale(1.1);
+   
+  }
+  #backbtn,
+  #nextbtn 
+  {
+    width: 35px;
+    margin: 15px;
+  }
+  
+}
+
+@media (max-width: 767px) and (min-width: 479px) {
+  .gallery div {
+    display: flex;
+    flex-wrap: nowrap;   /* keep in one row */
+    gap: 15px;
+  }
+  .gallery div img {
+     margin: 5px;
+    height: 280px;
+    width: 90px;
+  }
+  .gallery div img:hover {
+    width: 180px;
+    filter: grayscale(0%);
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+  #backbtn,
+  #nextbtn {
+    width: 35px;
+    margin: 15px;
+  }
+  .gallery div::-webkit-scrollbar {
+  display: none;
+}
+}
+
+@media (max-width: 480px) {
+  .gallery div {
+    display: flex;
+    flex-wrap: nowrap;   /* keep in one row */
+    gap: 10px;
+    margin: 5px;
+  }
+  .gallery div img {
+    width: 90px;
+    height: 300px;
+  }
+  #backbtn,
+  #nextbtn {
+    width: 30px;
+    margin: 10px;
+  }
+  .gallery div::-webkit-scrollbar {
+  display: none;
+}
+}
